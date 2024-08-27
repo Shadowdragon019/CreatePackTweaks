@@ -1,0 +1,58 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "create_pack_tweaks:mushy_mold"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "create_pack_tweaks:mushy_mold",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "material": "mushy_brick"
+              }
+            }
+          ],
+          "name": "create_pack_tweaks:mushy_brick"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "create_pack_tweaks:mushy_mold",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "material": "mushy_paste"
+              }
+            }
+          ],
+          "name": "create_pack_tweaks:mushy_paste"
+        }
+      ],
+      "functions": [
+        {
+          "function": "minecraft:explosion_decay"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "create_pack_tweaks:blocks/mushy_mold"
+}

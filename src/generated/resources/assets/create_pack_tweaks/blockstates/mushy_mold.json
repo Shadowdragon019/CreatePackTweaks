@@ -1,0 +1,94 @@
+{
+  "variants": {
+    "facing=east,material=mushy_brick,shape=ingot": {
+      "model": "create_pack_tweaks:block/casts/mushy/ingot/mushy_brick",
+      "y": 90
+    },
+    "facing=east,material=mushy_brick,shape=test": {
+      "model": "create_pack_tweaks:block/casts/mushy/test/mushy_brick",
+      "y": 90
+    },
+    "facing=east,material=mushy_paste,shape=ingot": {
+      "model": "create_pack_tweaks:block/casts/mushy/ingot/mushy_paste",
+      "y": 90
+    },
+    "facing=east,material=mushy_paste,shape=test": {
+      "model": "create_pack_tweaks:block/casts/mushy/test/mushy_paste",
+      "y": 90
+    },
+    "facing=east,material=none,shape=ingot": {
+      "model": "create_pack_tweaks:block/casts/mushy/ingot/none",
+      "y": 90
+    },
+    "facing=east,material=none,shape=test": {
+      "model": "create_pack_tweaks:block/casts/mushy/test/none",
+      "y": 90
+    },
+    "facing=north,material=mushy_brick,shape=ingot": {
+      "model": "create_pack_tweaks:block/casts/mushy/ingot/mushy_brick"
+    },
+    "facing=north,material=mushy_brick,shape=test": {
+      "model": "create_pack_tweaks:block/casts/mushy/test/mushy_brick"
+    },
+    "facing=north,material=mushy_paste,shape=ingot": {
+      "model": "create_pack_tweaks:block/casts/mushy/ingot/mushy_paste"
+    },
+    "facing=north,material=mushy_paste,shape=test": {
+      "model": "create_pack_tweaks:block/casts/mushy/test/mushy_paste"
+    },
+    "facing=north,material=none,shape=ingot": {
+      "model": "create_pack_tweaks:block/casts/mushy/ingot/none"
+    },
+    "facing=north,material=none,shape=test": {
+      "model": "create_pack_tweaks:block/casts/mushy/test/none"
+    },
+    "facing=south,material=mushy_brick,shape=ingot": {
+      "model": "create_pack_tweaks:block/casts/mushy/ingot/mushy_brick",
+      "y": 180
+    },
+    "facing=south,material=mushy_brick,shape=test": {
+      "model": "create_pack_tweaks:block/casts/mushy/test/mushy_brick",
+      "y": 180
+    },
+    "facing=south,material=mushy_paste,shape=ingot": {
+      "model": "create_pack_tweaks:block/casts/mushy/ingot/mushy_paste",
+      "y": 180
+    },
+    "facing=south,material=mushy_paste,shape=test": {
+      "model": "create_pack_tweaks:block/casts/mushy/test/mushy_paste",
+      "y": 180
+    },
+    "facing=south,material=none,shape=ingot": {
+      "model": "create_pack_tweaks:block/casts/mushy/ingot/none",
+      "y": 180
+    },
+    "facing=south,material=none,shape=test": {
+      "model": "create_pack_tweaks:block/casts/mushy/test/none",
+      "y": 180
+    },
+    "facing=west,material=mushy_brick,shape=ingot": {
+      "model": "create_pack_tweaks:block/casts/mushy/ingot/mushy_brick",
+      "y": 270
+    },
+    "facing=west,material=mushy_brick,shape=test": {
+      "model": "create_pack_tweaks:block/casts/mushy/test/mushy_brick",
+      "y": 270
+    },
+    "facing=west,material=mushy_paste,shape=ingot": {
+      "model": "create_pack_tweaks:block/casts/mushy/ingot/mushy_paste",
+      "y": 270
+    },
+    "facing=west,material=mushy_paste,shape=test": {
+      "model": "create_pack_tweaks:block/casts/mushy/test/mushy_paste",
+      "y": 270
+    },
+    "facing=west,material=none,shape=ingot": {
+      "model": "create_pack_tweaks:block/casts/mushy/ingot/none",
+      "y": 270
+    },
+    "facing=west,material=none,shape=test": {
+      "model": "create_pack_tweaks:block/casts/mushy/test/none",
+      "y": 270
+    }
+  }
+}

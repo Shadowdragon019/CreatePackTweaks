@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "create_pack_tweaks:item/small_pile_of_mushy_paste"
+  }
+}

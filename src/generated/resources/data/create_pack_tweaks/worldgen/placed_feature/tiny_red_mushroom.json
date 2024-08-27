@@ -1,0 +1,31 @@
+{
+  "feature": "create_pack_tweaks:tiny_red_mushroom",
+  "placement": [
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:biome"
+    },
+    {
+      "type": "minecraft:heightmap",
+      "heightmap": "WORLD_SURFACE_WG"
+    },
+    {
+      "type": "minecraft:block_predicate_filter",
+      "predicate": {
+        "type": "minecraft:matching_block_tag",
+        "offset": [
+          0,
+          -1,
+          0
+        ],
+        "tag": "minecraft:mushroom_grow_block"
+      }
+    },
+    {
+      "type": "minecraft:count",
+      "count": 2
+    }
+  ]
+}

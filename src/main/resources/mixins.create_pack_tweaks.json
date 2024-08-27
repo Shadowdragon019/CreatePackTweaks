@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "com.roxxane.create_pack_tweaks.mixins",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "AirCurrentMixin",
+    "MushroomBlockMixin",
+    "OakTreeGrowerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "refmap": "mixins.create_pack_tweaks.refmap.json"
+}
