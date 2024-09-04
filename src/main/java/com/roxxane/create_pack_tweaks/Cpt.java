@@ -53,7 +53,7 @@ public class Cpt {
         var item = event.getEntity().getItemInHand(hand);
         var hitResult = event.getHitVec();
 
-        if (item.isEmpty() && hand == InteractionHand.MAIN_HAND && player.isShiftKeyDown())
+        if (item.isEmpty() && hand == InteractionHand.MAIN_HAND)
             if (AllItems.WRENCH.get().useOn(new UseOnContext(level, player, hand, item, hitResult))
                 == InteractionResult.SUCCESS)
                 player.swing(hand);
