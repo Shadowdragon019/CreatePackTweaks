@@ -1,6 +1,6 @@
 package com.roxxane.create_pack_tweaks.worldgen.features;
 
-import com.roxxane.create_pack_tweaks.CreatePackTweaks;
+import com.roxxane.create_pack_tweaks.Cpt;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
@@ -11,7 +11,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfigur
 
 public class CptConfiguredFeatures {
     public static ResourceKey<ConfiguredFeature<?, ?>> registryKey(String name) {
-        return ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(CreatePackTweaks.id, name));
+        return ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(Cpt.id, name));
     }
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> tinyTreeKey = registryKey("tiny_tree");

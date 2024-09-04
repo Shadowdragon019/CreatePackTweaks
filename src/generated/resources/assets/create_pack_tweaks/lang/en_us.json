@@ -1,7 +1,10 @@
 {
   "block.create_pack_tweaks.mushy_mold": "Mushy Mold",
+  "category.create_pack_tweaks.drilling": "Drilling",
+  "category.create_pack_tweaks.mold_heating": "Mold Heating",
   "chat.create_pack_tweaks.mold_contains": "§8Goes in molds:",
   "chat.create_pack_tweaks.mold_contains_ingot": "§8 - Ingot",
+  "chat.create_pack_tweaks.reload_error": "§cCreate Pack Tweaks failed to reload!",
   "item.create_pack_tweaks.mushy_brick": "Mushy Brick",
   "item.create_pack_tweaks.mushy_paste": "Mushy Paste",
   "item.create_pack_tweaks.small_pile_of_mushy_paste": "Small Pile Of Mushy Paste"

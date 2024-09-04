@@ -1,6 +1,6 @@
 package com.roxxane.create_pack_tweaks.worldgen.biome_modifiers;
 
-import com.roxxane.create_pack_tweaks.CreatePackTweaks;
+import com.roxxane.create_pack_tweaks.Cpt;
 import com.roxxane.create_pack_tweaks.worldgen.features.CptPlacedFeatures;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
@@ -17,7 +17,7 @@ public class CptBiomeModifiers {
     private static ResourceKey<BiomeModifier> registerKey(String name) {
         return ResourceKey.create(
             ForgeRegistries.Keys.BIOME_MODIFIERS,
-            new ResourceLocation(CreatePackTweaks.id, name)
+            new ResourceLocation(Cpt.id, name)
         );
     }
 

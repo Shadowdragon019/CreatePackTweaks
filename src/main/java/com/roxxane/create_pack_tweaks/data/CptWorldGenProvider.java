@@ -1,6 +1,6 @@
 package com.roxxane.create_pack_tweaks.data;
 
-import com.roxxane.create_pack_tweaks.CreatePackTweaks;
+import com.roxxane.create_pack_tweaks.Cpt;
 import com.roxxane.create_pack_tweaks.worldgen.biome_modifiers.CptBiomeModifiers;
 import com.roxxane.create_pack_tweaks.worldgen.features.CptConfiguredFeatures;
 import com.roxxane.create_pack_tweaks.worldgen.features.CptPlacedFeatures;
@@ -21,6 +21,6 @@ public class CptWorldGenProvider extends DatapackBuiltinEntriesProvider {
         .add(ForgeRegistries.Keys.BIOME_MODIFIERS, CptBiomeModifiers::bootstrap);
 
     public CptWorldGenProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
-        super(output, registries, builder, Set.of(CreatePackTweaks.id));
+        super(output, registries, builder, Set.of(Cpt.id));
     }
 }

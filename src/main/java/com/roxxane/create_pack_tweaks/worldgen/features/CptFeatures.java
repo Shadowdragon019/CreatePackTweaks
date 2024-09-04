@@ -1,6 +1,6 @@
 package com.roxxane.create_pack_tweaks.worldgen.features;
 
-import com.roxxane.create_pack_tweaks.CreatePackTweaks;
+import com.roxxane.create_pack_tweaks.Cpt;
 import com.roxxane.create_pack_tweaks.worldgen.features.classes.TinyBrownMushroomFeature;
 import com.roxxane.create_pack_tweaks.worldgen.features.classes.TinyRedMushroomFeature;
 import com.roxxane.create_pack_tweaks.worldgen.features.classes.TinyTreeFeature;
@@ -13,7 +13,7 @@ import net.minecraftforge.registries.RegistryObject;
 public class CptFeatures {
     private static final DeferredRegister<Feature<?>> features = DeferredRegister.create(
         ForgeRegistries.FEATURES,
-        CreatePackTweaks.id
+        Cpt.id
     );
 
     public static final RegistryObject<TinyTreeFeature> tinyTree = features.register(

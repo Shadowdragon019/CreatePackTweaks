@@ -1,6 +1,6 @@
 package com.roxxane.create_pack_tweaks.worldgen.features;
 
-import com.roxxane.create_pack_tweaks.CreatePackTweaks;
+import com.roxxane.create_pack_tweaks.Cpt;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Vec3i;
 import net.minecraft.core.registries.Registries;
@@ -17,7 +17,7 @@ import java.util.List;
 
 public class CptPlacedFeatures {
     public static ResourceKey<PlacedFeature> registryKey(String name) {
-        return ResourceKey.create(Registries.PLACED_FEATURE, new ResourceLocation(CreatePackTweaks.id, name));
+        return ResourceKey.create(Registries.PLACED_FEATURE, new ResourceLocation(Cpt.id, name));
     }
 
     public static final ResourceKey<PlacedFeature> tinyTreeKey = registryKey("tiny_tree");

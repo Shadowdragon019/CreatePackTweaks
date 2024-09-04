@@ -1,6 +1,6 @@
 package com.roxxane.create_pack_tweaks.blocks;
 
-import com.roxxane.create_pack_tweaks.CreatePackTweaks;
+import com.roxxane.create_pack_tweaks.Cpt;
 import com.roxxane.create_pack_tweaks.blocks.entities.FillableMoldBlockEntity;
 import com.roxxane.create_pack_tweaks.blocks.state_properties.CptStateProperties;
 import com.roxxane.create_pack_tweaks.blocks.state_properties.MaterialState;
@@ -16,7 +16,7 @@ import net.minecraftforge.client.model.generators.ConfiguredModel;
 
 public class CptBlocks {
     public static final BlockEntry<FillableMoldBlock> mushyMold =
-        CreatePackTweaks.registrate.block("mushy_mold", FillableMoldBlock::new)
+        Cpt.registrate.block("mushy_mold", FillableMoldBlock::new)
             .item()
                 .model(
                     (ctx, provider) ->

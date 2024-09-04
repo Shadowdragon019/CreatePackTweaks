@@ -8,6 +8,7 @@ import com.roxxane.create_pack_tweaks.items.CptItems;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -48,6 +49,18 @@ public class FillableMoldBlock extends BaseEntityBlock implements SimpleWaterlog
             MaterialState.mushyPaste, CptItems.smallPileOfMushyPaste,
             MaterialState.mushyBrick, CptItems.mushyBrick
         )
+    );
+
+    public static final Map<ShapeState, Map<MaterialState, MaterialState>> heatingMap = Map.of(
+        ShapeState.ingot, Map.of(
+            MaterialState.mushyPaste, MaterialState.mushyBrick
+        )
+    );
+
+    public static final Map<ShapeState, Map<MaterialState, MaterialState>> coolingMap = Map.of();
+
+    public static final Map<ResourceLocation, String> name = Map.of(
+        CptBlocks.mushyMold.getId(), "mushy"
     );
 
     public FillableMoldBlock(Properties pProperties) {
