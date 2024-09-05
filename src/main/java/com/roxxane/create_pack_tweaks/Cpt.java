@@ -12,7 +12,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -36,7 +35,7 @@ public class Cpt {
         CptBlockEntities.register();
         CptFeatures.register(modEventBus);
 
-        MinecraftForge.EVENT_BUS.addListener(this::wrench);
+        //MinecraftForge.EVENT_BUS.addListener(this::wrench);
 
         GogglesItem.addIsWearingPredicate((player) -> true);
 
