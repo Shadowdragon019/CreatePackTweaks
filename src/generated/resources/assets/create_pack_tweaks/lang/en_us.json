@@ -3,9 +3,10 @@
   "category.create_pack_tweaks.drilling": "Drilling",
   "category.create_pack_tweaks.mold_cooling": "Mold Cooling",
   "category.create_pack_tweaks.mold_heating": "Mold Heating",
-  "chat.create_pack_tweaks.goes_in_mold": "§8Can be placed in molds",
   "chat.create_pack_tweaks.reload_error": "§cCreate Pack Tweaks failed to reload!",
   "item.create_pack_tweaks.mushy_brick": "Mushy Brick",
   "item.create_pack_tweaks.mushy_paste": "Mushy Paste",
-  "item.create_pack_tweaks.small_pile_of_mushy_paste": "Small Pile Of Mushy Paste"
+  "item.create_pack_tweaks.small_pile_of_mushy_paste": "Small Pile Of Mushy Paste",
+  "item.tooltip.create_pack_tweaks.goes_in_mold": "§8Can be placed in molds",
+  "item.tooltip.create_pack_tweaks.mold": "§8Processing has a 5% chance to break the mold"
 }

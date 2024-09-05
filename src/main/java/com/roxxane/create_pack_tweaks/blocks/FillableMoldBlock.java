@@ -1,12 +1,14 @@
 package com.roxxane.create_pack_tweaks.blocks;
 
 import com.roxxane.create_pack_tweaks.blocks.entities.CptBlockEntities;
+import com.roxxane.create_pack_tweaks.blocks.entities.FillableMoldBlockEntity;
 import com.roxxane.create_pack_tweaks.blocks.state_properties.CptStateProperties;
 import com.roxxane.create_pack_tweaks.blocks.state_properties.MaterialState;
 import com.roxxane.create_pack_tweaks.items.CptItems;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -14,6 +16,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
@@ -99,20 +102,30 @@ public class FillableMoldBlock extends BaseEntityBlock implements SimpleWaterlog
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-        Level level = ctx.getLevel();
-        BlockPos pos = ctx.getClickedPos();
-        BlockState state = defaultBlockState();
-        Direction direction = ctx.getClickedFace();
-        FluidState fluidState = level.getFluidState(pos);
+        var level = ctx.getLevel();
+        var pos = ctx.getClickedPos();
+        var state = defaultBlockState();
+        var direction = ctx.getClickedFace();
+        var fluidState = level.getFluidState(pos);
 
-        if (!ctx.replacingClickedOnBlock() && direction.getAxis().isHorizontal()) {
+        if (!ctx.replacingClickedOnBlock() && direction.getAxis().isHorizontal())
             state = state.setValue(BlockStateProperties.HORIZONTAL_FACING, direction);
-        } else {
+        else
             state = state.setValue(BlockStateProperties.HORIZONTAL_FACING, ctx.getHorizontalDirection().getOpposite());
-        }
+
         state.setValue(BlockStateProperties.WATERLOGGED, fluidState.getType() == Fluids.WATER);
 
         return state;
+    }
+
+    @Override
+    public void onBlockStateChange(LevelReader level, BlockPos pos, BlockState oldState, BlockState newState) {
+        var blockEntity = level.getBlockEntity(pos);
+
+        if (blockEntity instanceof FillableMoldBlockEntity)
+            ((FillableMoldBlockEntity) blockEntity).progress = 0;
+
+        super.onBlockStateChange(level, pos, oldState, newState);
     }
 
     @Override
@@ -185,5 +198,14 @@ public class FillableMoldBlock extends BaseEntityBlock implements SimpleWaterlog
     @Override
     public @NotNull RenderShape getRenderShape(@NotNull BlockState state) {
         return RenderShape.MODEL;
+    }
+
+    @Override
+    public void onRemove(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos,
+         @NotNull BlockState newState, boolean movedByPiston) {
+        var item = materialItemMap.get(state.getValue(CptStateProperties.material));
+        if (item != null && !newState.is(CptBlocks.mushyMold.get()))
+            Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), item.get().getDefaultInstance());
+        super.onRemove(state, level, pos, newState, movedByPiston);
     }
 }

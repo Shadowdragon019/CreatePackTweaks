@@ -1,5 +1,6 @@
 package com.roxxane.create_pack_tweaks;
 
+import com.roxxane.create_pack_tweaks.blocks.CptBlocks;
 import com.roxxane.create_pack_tweaks.blocks.FillableMoldBlock;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
@@ -11,8 +12,14 @@ import net.minecraftforge.fml.common.Mod;
 public class CptClientEvents {
     @SubscribeEvent
     public static void tooltipEvent(ItemTooltipEvent event) {
+        var stack = event.getItemStack();
+        var tooltip = event.getToolTip();
+
+        if (stack.is(CptBlocks.mushyMold.asItem()))
+            tooltip.add(Component.translatable("item.tooltip.create_pack_tweaks.mold"));
+
         for (var item : FillableMoldBlock.materialItemMap.values())
-            if (event.getItemStack().is(item.get()))
-                event.getToolTip().add(Component.translatable("chat.create_pack_tweaks.goes_in_mold"));
+            if (stack.is(item.get()))
+                tooltip.add(Component.translatable("item.tooltip.create_pack_tweaks.goes_in_mold"));
     }
 }

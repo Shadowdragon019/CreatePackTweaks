@@ -1,5 +1,6 @@
 package com.roxxane.create_pack_tweaks.blocks.entities;
 
+import com.roxxane.create_pack_tweaks.blocks.CptBlocks;
 import com.roxxane.create_pack_tweaks.blocks.FillableMoldBlock;
 import com.roxxane.create_pack_tweaks.blocks.state_properties.CptStateProperties;
 import com.roxxane.create_pack_tweaks.blocks.state_properties.MaterialState;
@@ -43,6 +44,8 @@ public class FillableMoldBlockEntity extends BlockEntity {
                 if (state.getValue(CptStateProperties.material) == heatingEntry.getKey()) {
                     level.setBlock(pos,
                         state.setValue(CptStateProperties.material, heatingEntry.getValue()), 1 | 2);
+                    if (state.is(CptBlocks.mushyMold.get()) && level.random.nextInt(10) == 0)
+                        level.destroyBlock(pos, false);
                     progress = 0;
                 }
         // If cooled
@@ -51,6 +54,8 @@ public class FillableMoldBlockEntity extends BlockEntity {
                 if (state.getValue(CptStateProperties.material) == coolingEntry.getKey()) {
                     level.setBlock(pos,
                         state.setValue(CptStateProperties.material, coolingEntry.getValue()), 1 | 2);
+                    if (state.is(CptBlocks.mushyMold.get()) && level.random.nextInt(10) == 0)
+                        level.destroyBlock(pos, false);
                     progress = 0;
                 }
 

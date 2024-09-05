@@ -3,15 +3,8 @@ package com.roxxane.create_pack_tweaks.blocks;
 import com.roxxane.create_pack_tweaks.Cpt;
 import com.roxxane.create_pack_tweaks.blocks.entities.FillableMoldBlockEntity;
 import com.roxxane.create_pack_tweaks.blocks.state_properties.CptStateProperties;
-import com.roxxane.create_pack_tweaks.blocks.state_properties.MaterialState;
-import com.roxxane.create_pack_tweaks.items.CptItems;
 import com.tterrag.registrate.util.entry.BlockEntry;
-import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.storage.loot.LootPool;
-import net.minecraft.world.level.storage.loot.entries.LootItem;
-import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 
 public class CptBlocks {
@@ -42,34 +35,7 @@ public class CptBlocks {
                     )
             )
             .loot(
-                (lootTables, block) -> lootTables.add(
-                    block,
-                    lootTables.createSingleItemTable(block).withPool(
-                        lootTables.applyExplosionDecay(
-                            block, LootPool.lootPool().setRolls(ConstantValue.exactly(1.0f))
-                                .add(
-                                    LootItem.lootTableItem(CptItems.mushyBrick).when(
-                                        LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
-                                            .setProperties(
-                                                StatePropertiesPredicate.Builder.properties().hasProperty(
-                                                    CptStateProperties.material, MaterialState.mushyBrick
-                                                )
-                                            )
-                                    )
-                                )
-                                .add(
-                                    LootItem.lootTableItem(CptItems.mushyPaste).when(
-                                        LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
-                                            .setProperties(
-                                                StatePropertiesPredicate.Builder.properties().hasProperty(
-                                                    CptStateProperties.material, MaterialState.mushyPaste
-                                                )
-                                            )
-                                    )
-                                )
-                        )
-                    )
-                )
+                (lootTables, block) -> lootTables.add(block, lootTables.createSingleItemTable(block))
             )
             .register();
 
