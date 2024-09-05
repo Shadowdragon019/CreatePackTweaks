@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import com.roxxane.create_pack_tweaks.Cpt;
 import com.roxxane.create_pack_tweaks.blocks.FillableMoldBlock;
 import com.roxxane.create_pack_tweaks.rei.CptReiClientPlugin;
-import com.roxxane.create_pack_tweaks.rei.displays.MoldHeatingDisplay;
+import com.roxxane.create_pack_tweaks.rei.displays.MoldCoolingDisplay;
 import com.simibubi.create.AllBlocks;
 import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
@@ -20,15 +20,15 @@ import oshi.util.tuples.Pair;
 
 import java.util.List;
 
-public class MoldHeatingCategory implements DisplayCategory<MoldHeatingDisplay> {
+public class MoldCoolingCategory implements DisplayCategory<MoldCoolingDisplay> {
     @Override
-    public CategoryIdentifier<? extends MoldHeatingDisplay> getCategoryIdentifier() {
-        return CptReiClientPlugin.moldHeatingCategory;
+    public CategoryIdentifier<? extends MoldCoolingDisplay> getCategoryIdentifier() {
+        return CptReiClientPlugin.moldCoolingCategory;
     }
 
     @Override
     public Component getTitle() {
-        return Component.translatable("category.create_pack_tweaks.mold_heating");
+        return Component.translatable("category.create_pack_tweaks.mold_cooling");
     }
 
     @Override
@@ -37,7 +37,7 @@ public class MoldHeatingCategory implements DisplayCategory<MoldHeatingDisplay> 
     }
 
     @Override
-    public List<Widget> setupDisplay(MoldHeatingDisplay display, Rectangle bounds) {
+    public List<Widget> setupDisplay(MoldCoolingDisplay display, Rectangle bounds) {
         Point startPoint = new Point(bounds.getCenterX() - 41, bounds.getCenterY() + 32);
         List<Widget> widgets = Lists.newArrayList();
 
@@ -61,10 +61,10 @@ public class MoldHeatingCategory implements DisplayCategory<MoldHeatingDisplay> 
             .entries(display.getOutputEntries().get(0)).markOutput());
 
         for (var pair : List.of(
-            new Pair<>(Cpt.makeResLoc("textures/gui/fan_heating.png"), new Rectangle(4, -37, 16, 32)),
+            new Pair<>(Cpt.makeResLoc("textures/gui/fan_cooling.png"), new Rectangle(4, -37, 16, 32)),
             new Pair<>(Cpt.makeResLoc("textures/gui/mold/mushy.png"), new Rectangle(4, -4, 16, 16)),
             new Pair<>(Cpt.makeResLoc("textures/gui/mold_material/" + inputMaterial + ".png"), new Rectangle(4, -4, 16, 16)),
-            new Pair<>(Cpt.makeResLoc("textures/gui/fan_heating.png"), new Rectangle(61, -37, 16, 32)),
+            new Pair<>(Cpt.makeResLoc("textures/gui/fan_cooling.png"), new Rectangle(61, -37, 16, 32)),
             new Pair<>(Cpt.makeResLoc("textures/gui/mold/mushy.png"), new Rectangle(61, -4, 16, 16)),
             new Pair<>(Cpt.makeResLoc("textures/gui/mold_material/" + outputMaterial + ".png"), new Rectangle(61, -4, 16, 16))
         )) {

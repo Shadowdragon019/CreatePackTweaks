@@ -50,10 +50,7 @@ public class CptConfig {
 
             drillingMap = new HashMap<>();
             for (var entry : data.getAsJsonObject("drilling_config").entrySet()) {
-                drillingMap.put(
-                    getBlock(entry.getKey()),
-                    getItem(entry.getValue().getAsString())
-                );
+                drillingMap.put(getBlock(entry.getKey()), getItem(entry.getValue().getAsString()));
             }
 
             reloadSuccess = true;

@@ -37,13 +37,14 @@ public class Cpt {
         CptFeatures.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.addListener(this::wrench);
-        registrate.addRawLang("chat.create_pack_tweaks.mold_contains", "§8Goes in molds:");
-        registrate.addRawLang("chat.create_pack_tweaks.mold_contains_ingot", "§8 - Ingot");
-        registrate.addRawLang("category.create_pack_tweaks.mold_heating", "Mold Heating");
-        registrate.addRawLang("category.create_pack_tweaks.drilling", "Drilling");
-        registrate.addRawLang("chat.create_pack_tweaks.reload_error", "§c" + displayName + " failed to reload!");
 
         GogglesItem.addIsWearingPredicate((player) -> true);
+
+        registrate.addRawLang("chat.create_pack_tweaks.goes_in_mold", "§8Can be placed in molds");
+        registrate.addRawLang("category.create_pack_tweaks.mold_heating", "Mold Heating");
+        registrate.addRawLang("category.create_pack_tweaks.mold_cooling", "Mold Cooling");
+        registrate.addRawLang("category.create_pack_tweaks.drilling", "Drilling");
+        registrate.addRawLang("chat.create_pack_tweaks.reload_error", "§c" + displayName + " failed to reload!");
     }
 
     public void wrench(PlayerInteractEvent.RightClickBlock event) {
@@ -59,7 +60,7 @@ public class Cpt {
                 player.swing(hand);
     }
 
-    public static ResourceLocation resourceLocation(String path) {
+    public static ResourceLocation makeResLoc(String path) {
         return new ResourceLocation(id, path);
     }
 }

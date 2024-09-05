@@ -39,26 +39,20 @@ public class FillableMoldBlockEntity extends BlockEntity {
     public void serverTick(Level level, BlockPos pos, BlockState state) {
         // If heated
         if (progress >= 200)
-            for (var heatingShapeEntry : FillableMoldBlock.heatingMap.entrySet())
-                if (state.getValue(CptStateProperties.shape) == heatingShapeEntry.getKey())
-                    for (var heatingEntry : heatingShapeEntry.getValue().entrySet())
-                        if (state.getValue(CptStateProperties.material) == heatingEntry.getKey()) {
-                            level.setBlock(pos,
-                                state.setValue(CptStateProperties.material, heatingEntry.getValue()),
-                                1 | 2);
-                            progress = 0;
-                        }
+            for (var heatingEntry : FillableMoldBlock.heatingMap.entrySet())
+                if (state.getValue(CptStateProperties.material) == heatingEntry.getKey()) {
+                    level.setBlock(pos,
+                        state.setValue(CptStateProperties.material, heatingEntry.getValue()), 1 | 2);
+                    progress = 0;
+                }
         // If cooled
         else if (progress <= -200)
-            for (var coolingShapeEntry : FillableMoldBlock.coolingMap.entrySet())
-                if (state.getValue(CptStateProperties.shape) == coolingShapeEntry.getKey())
-                    for (var coolingEntry : coolingShapeEntry.getValue().entrySet())
-                        if (state.getValue(CptStateProperties.material) == coolingEntry.getKey()) {
-                            level.setBlock(pos,
-                                state.setValue(CptStateProperties.material, coolingEntry.getValue()),
-                                1 | 2);
-                            progress = 0;
-                        }
+            for (var coolingEntry : FillableMoldBlock.coolingMap.entrySet())
+                if (state.getValue(CptStateProperties.material) == coolingEntry.getKey()) {
+                    level.setBlock(pos,
+                        state.setValue(CptStateProperties.material, coolingEntry.getValue()), 1 | 2);
+                    progress = 0;
+                }
 
         // Prevent players from storing progress
         if (state.getValue(CptStateProperties.material) == MaterialState.none)

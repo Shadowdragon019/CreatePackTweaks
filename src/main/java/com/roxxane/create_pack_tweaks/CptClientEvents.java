@@ -11,21 +11,8 @@ import net.minecraftforge.fml.common.Mod;
 public class CptClientEvents {
     @SubscribeEvent
     public static void tooltipEvent(ItemTooltipEvent event) {
-        var goesInMold = false;
-        for (var shapeEntry : FillableMoldBlock.materialItemMap.entrySet()) {
-            var shape = shapeEntry.getKey();
-            for (var materialEntry : shapeEntry.getValue().entrySet()) {
-                var item = materialEntry.getValue();
-
-                if (event.getItemStack().is(item.get())) {
-                    if (!goesInMold) {
-                        goesInMold = true;
-                        event.getToolTip().add(Component.translatable("chat.create_pack_tweaks.mold_contains"));
-                    }
-                    event.getToolTip().add(
-                        Component.translatable("chat.create_pack_tweaks.mold_contains_" + shape.name));
-                }
-            }
-        }
+        for (var item : FillableMoldBlock.materialItemMap.values())
+            if (event.getItemStack().is(item.get()))
+                event.getToolTip().add(Component.translatable("chat.create_pack_tweaks.goes_in_mold"));
     }
 }

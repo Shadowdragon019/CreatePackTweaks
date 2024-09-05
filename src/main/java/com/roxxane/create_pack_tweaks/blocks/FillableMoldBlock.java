@@ -3,12 +3,10 @@ package com.roxxane.create_pack_tweaks.blocks;
 import com.roxxane.create_pack_tweaks.blocks.entities.CptBlockEntities;
 import com.roxxane.create_pack_tweaks.blocks.state_properties.CptStateProperties;
 import com.roxxane.create_pack_tweaks.blocks.state_properties.MaterialState;
-import com.roxxane.create_pack_tweaks.blocks.state_properties.ShapeState;
 import com.roxxane.create_pack_tweaks.items.CptItems;
-import com.tterrag.registrate.util.entry.ItemEntry;
+import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -44,24 +42,23 @@ public class FillableMoldBlock extends BaseEntityBlock implements SimpleWaterlog
     public static final VoxelShape south = box(2, 0, 0, 14, 5, 16);
     public static final VoxelShape north = box(2, 0, 0, 14, 5, 16);
 
-    public static final Map<ShapeState, Map<MaterialState, ItemEntry<Item>>> materialItemMap = Map.of(
-        ShapeState.ingot, Map.of(
-            MaterialState.mushyPaste, CptItems.smallPileOfMushyPaste,
-            MaterialState.mushyBrick, CptItems.mushyBrick
-        )
+    public static final Map<MaterialState, NonNullSupplier<Item>> materialItemMap = Map.of(
+        MaterialState.mushyPaste, CptItems.smallPileOfMushyPaste,
+        MaterialState.mushyBrick, CptItems.mushyBrick
     );
 
-    public static final Map<ShapeState, Map<MaterialState, MaterialState>> heatingMap = Map.of(
-        ShapeState.ingot, Map.of(
-            MaterialState.mushyPaste, MaterialState.mushyBrick
-        )
+    public static MaterialState getMaterialFromItem(Item item) {
+        for (var entry : materialItemMap.entrySet())
+            if (entry.getValue().get() == item)
+                return entry.getKey();
+        return null;
+    }
+
+    public static final Map<MaterialState, MaterialState> heatingMap = Map.of(
+        MaterialState.mushyPaste, MaterialState.mushyBrick
     );
 
-    public static final Map<ShapeState, Map<MaterialState, MaterialState>> coolingMap = Map.of();
-
-    public static final Map<ResourceLocation, String> name = Map.of(
-        CptBlocks.mushyMold.getId(), "mushy"
-    );
+    public static final Map<MaterialState, MaterialState> coolingMap = Map.of();
 
     public FillableMoldBlock(Properties pProperties) {
         super(pProperties);
@@ -69,7 +66,6 @@ public class FillableMoldBlock extends BaseEntityBlock implements SimpleWaterlog
         registerDefaultState(
             getStateDefinition().any()
                 .setValue(CptStateProperties.material, MaterialState.none)
-                .setValue(CptStateProperties.shape, ShapeState.ingot)
                 .setValue(BlockStateProperties.WATERLOGGED, false)
                 .setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.EAST)
         );
@@ -123,7 +119,6 @@ public class FillableMoldBlock extends BaseEntityBlock implements SimpleWaterlog
     public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(
             CptStateProperties.material,
-            CptStateProperties.shape,
             BlockStateProperties.WATERLOGGED,
             BlockStateProperties.HORIZONTAL_FACING
         );
@@ -142,25 +137,23 @@ public class FillableMoldBlock extends BaseEntityBlock implements SimpleWaterlog
         var currentMaterial = state.getValue(CptStateProperties.material);
 
         if (hand == InteractionHand.MAIN_HAND)
-            for (var shapeEntry : materialItemMap.entrySet())
-                if (state.getValue(CptStateProperties.shape) == shapeEntry.getKey())
-                    for (var entry : shapeEntry.getValue().entrySet()) {
-                        var entryMaterial = entry.getKey();
-                        var entryItem = entry.getValue().get();
+            for (var entry : materialItemMap.entrySet()) {
+                var material = entry.getKey();
+                var item = entry.getValue().get();
 
-                        if (currentMaterial == MaterialState.none && itemInHand.is(entryItem)) {
-                            if (!player.getAbilities().instabuild)
-                                player.getItemInHand(hand).shrink(1);
-                            level.setBlock(pos, state.setValue(CptStateProperties.material, entryMaterial),
-                                1 | 2);
-                            return InteractionResult.SUCCESS;
-                        } else if (currentMaterial == entryMaterial && itemInHand.isEmpty()) {
-                            player.addItem(entryItem.getDefaultInstance());
-                            level.setBlock(pos, state.setValue(CptStateProperties.material, MaterialState.none),
-                                1 | 2);
-                            return InteractionResult.SUCCESS;
-                        }
-                    }
+                if (currentMaterial == MaterialState.none && itemInHand.is(item)) {
+                    if (!player.getAbilities().instabuild)
+                        player.getItemInHand(hand).shrink(1);
+                    level.setBlock(pos, state.setValue(CptStateProperties.material, material),
+                        1 | 2);
+                    return InteractionResult.SUCCESS;
+                } else if (currentMaterial == material && itemInHand.isEmpty()) {
+                    player.addItem(item.getDefaultInstance());
+                    level.setBlock(pos, state.setValue(CptStateProperties.material, MaterialState.none),
+                        1 | 2);
+                    return InteractionResult.SUCCESS;
+                }
+            }
 
         return super.use(state, level, pos, player, hand, hit);
     }

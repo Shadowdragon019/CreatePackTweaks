@@ -21,7 +21,7 @@ public class CptBlocks {
                 .model(
                     (ctx, provider) ->
                         provider.withExistingParent(ctx.getName(),
-                        provider.modLoc("block/casts/mushy/ingot/none"))
+                        provider.modLoc("block/casts/mushy/none"))
                 )
                 .build()
             .blockEntity(FillableMoldBlockEntity::new)
@@ -32,7 +32,6 @@ public class CptBlocks {
                         state -> ConfiguredModel.builder()
                             .modelFile(provider.models().getExistingFile(provider.modLoc(
                             "block/casts/mushy/" +
-                                state.getValue(CptStateProperties.shape) + "/" +
                                 state.getValue(CptStateProperties.material)
                             )))
                             .rotationY(((int) state.getValue(
