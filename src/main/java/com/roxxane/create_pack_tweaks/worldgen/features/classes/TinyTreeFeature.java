@@ -79,7 +79,8 @@ public class TinyTreeFeature extends TinyFeature {
             for (var leavesPos : leavesPoses)
                 tinySetBlock(level, pos.offset(leavesPos.above()), leaves);
 
+            return true;
         }
-        return true;
+        return false;
     }
 }
