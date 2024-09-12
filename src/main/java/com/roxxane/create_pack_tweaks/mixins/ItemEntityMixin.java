@@ -9,6 +9,7 @@ import net.minecraft.world.entity.TraceableEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -25,13 +26,26 @@ abstract class ItemEntityMixin extends Entity implements TraceableEntity {
     @Unique
     public int createPackTweaks$mergeDelay = 0;
 
+    @Shadow public abstract ItemStack getItem();
+
+    @Shadow public abstract void setItem(ItemStack p_32046_);
+
+    @Shadow public abstract boolean isAttackable();
+
     public ItemEntityMixin(EntityType<?> p_19870_, Level p_19871_) {
         super(p_19870_, p_19871_);
     }
 
-    @Shadow public abstract ItemStack getItem();
+    @Unique
+    public void createPackTweaks$setRandomVelocity() {
+        setDeltaMovement(getDeltaMovement().x, lavaSmeltingInitialVelocity.y, getDeltaMovement().z);
 
-    @Shadow public abstract void setItem(ItemStack p_32046_);
+        addDeltaMovement(new Vec3(
+            random.nextDouble() * lavaSmeltingInitialVelocity.x * 2 - lavaSmeltingInitialVelocity.x,
+            0,
+            random.nextDouble() * lavaSmeltingInitialVelocity.z * 2 - lavaSmeltingInitialVelocity.z
+        ));
+    }
 
     @Inject(
         method = "tick",
@@ -60,20 +74,16 @@ abstract class ItemEntityMixin extends Entity implements TraceableEntity {
             // Prevent items from merging & reducing throughput
             createPackTweaks$mergeDelay = 60;
 
-            setDeltaMovement(
-                random.nextDouble() * lavaSmeltingInitialVelocity.x * 2 - lavaSmeltingInitialVelocity.x,
-                lavaSmeltingInitialVelocity.y,
-                random.nextDouble() * lavaSmeltingInitialVelocity.z * 2 - lavaSmeltingInitialVelocity.z
-            );
+            createPackTweaks$setRandomVelocity();
 
             if (CptConfig.lavaSmelting.containsKey(item) && random.nextInt(lavaSmeltingConversionChance) == 0) {
                 getItem().shrink(1);
-                level.addFreshEntity(new ItemEntity(level, xo, yo, zo,
-                    new ItemStack(CptConfig.lavaSmelting.get(item)),
-                    random.nextDouble() * lavaSmeltingInitialVelocity.x * 2 - lavaSmeltingInitialVelocity.x,
-                    lavaSmeltingInitialVelocity.y,
-                    random.nextDouble() * lavaSmeltingInitialVelocity.z * 2 - lavaSmeltingInitialVelocity.z
-                ));
+                var itemEntity = new ItemEntity(level, xo, yo, zo,
+                    new ItemStack(CptConfig.lavaSmelting.get(item))
+                );
+                level.addFreshEntity(itemEntity);
+
+                ((ItemEntityMixin) (Object) itemEntity).createPackTweaks$setRandomVelocity();
             }
         }
     }
