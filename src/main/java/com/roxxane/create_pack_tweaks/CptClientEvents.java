@@ -5,6 +5,7 @@ import com.roxxane.create_pack_tweaks.blocks.FillableMoldBlock;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -26,7 +27,7 @@ public class CptClientEvents {
             if (stack.is(item.get()))
                 tooltip.add(Component.translatable("item.tooltip.create_pack_tweaks.goes_in_mold"));
 
-        if (stack.getBurnTime(RecipeType.SMELTING) >= 1)
+        if (ForgeHooks.getBurnTime(stack, RecipeType.SMELTING) >= 1)
             tooltip.add(Component.translatable("item.tooltip.create_pack_tweaks.fuel"));
     }
 }
