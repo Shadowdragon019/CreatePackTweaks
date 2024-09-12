@@ -9,7 +9,8 @@
     "ItemMixin",
     "MushroomBlockMixin",
     "OakTreeGrowerMixin",
-    "ReloadableServerResourcesMixin"
+    "ReloadableServerResourcesMixin",
+    "WrenchItemMixin"
   ],
   "injectors": {
     "defaultRequire": 1
