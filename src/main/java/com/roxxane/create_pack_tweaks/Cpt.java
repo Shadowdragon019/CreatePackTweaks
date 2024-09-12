@@ -44,6 +44,7 @@ public class Cpt {
         registrate.addRawLang("item.tooltip.create_pack_tweaks.fuel", "§8Regular fuel for blaze burners");
         registrate.addRawLang("item.tooltip.create_pack_tweaks.mold",
             "§8Processing has a 5% chance to break the mold");
+        registrate.addRawLang("item.tooltip.create_pack_tweaks.wrench", "§8Can pickup anything destructible");
         registrate.addRawLang("category.create_pack_tweaks.mold_heating", "Mold Heating");
         registrate.addRawLang("category.create_pack_tweaks.mold_cooling", "Mold Cooling");
         registrate.addRawLang("category.create_pack_tweaks.drilling", "Drilling");

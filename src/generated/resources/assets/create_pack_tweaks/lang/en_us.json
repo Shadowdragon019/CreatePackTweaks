@@ -11,5 +11,6 @@
   "item.tooltip.create_pack_tweaks.fire_proof": "§8Lava proof",
   "item.tooltip.create_pack_tweaks.fuel": "§8Regular fuel for blaze burners",
   "item.tooltip.create_pack_tweaks.goes_in_mold": "§8Can be placed in molds",
-  "item.tooltip.create_pack_tweaks.mold": "§8Processing has a 5% chance to break the mold"
+  "item.tooltip.create_pack_tweaks.mold": "§8Processing has a 5% chance to break the mold",
+  "item.tooltip.create_pack_tweaks.wrench": "§8Can pickup anything destructible"
 }

@@ -37,7 +37,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
-// TODO: If in water, extinguish well consuming water
 @SuppressWarnings("deprecation")
 public class FillableMoldBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
     public static final VoxelShape east = box(0, 0, 2, 16, 5, 14);
