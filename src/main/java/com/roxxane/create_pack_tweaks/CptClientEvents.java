@@ -26,7 +26,7 @@ public class CptClientEvents {
             if (stack.is(item.get()))
                 tooltip.add(Component.translatable("item.tooltip.create_pack_tweaks.goes_in_mold"));
 
-        if (stack.getBurnTime(RecipeType.SMELTING) != 0)
+        if (stack.getBurnTime(RecipeType.SMELTING) >= 1)
             tooltip.add(Component.translatable("item.tooltip.create_pack_tweaks.fuel"));
     }
 }
