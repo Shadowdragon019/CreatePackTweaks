@@ -51,6 +51,7 @@ public class CptConfig {
         }
     }
 
+    @SuppressWarnings("SameParameterValue")
     private static JsonObject makeJsonRectangle(int x, int y, int width, int height) {
         var object = new JsonObject();
         object.addProperty("x", x);
@@ -88,7 +89,7 @@ public class CptConfig {
                 defaultData.add("drilling_config", drillingConfig);
 
                 defaultData.add("lava_smelting_bucket_config",
-                    makeJsonRectangle(16, 16, 16,16));
+                    makeJsonRectangle(31, 14, 16,16));
 
                 // Closing
                 gson.toJson(defaultData, writer);
