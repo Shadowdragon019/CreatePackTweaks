@@ -93,4 +93,16 @@ abstract class ItemEntityMixin extends Entity implements TraceableEntity {
     private void isMergableInject(CallbackInfoReturnable<Boolean> cir) {
         cir.setReturnValue(cir.getReturnValue() && createPackTweaks$mergeDelay == 0);
     }
+
+    @SuppressWarnings("rawtypes")
+    @Inject(method = "<init>(Lnet/minecraft/world/entity/EntityType;Lnet/minecraft/world/level/Level;)V",
+        at = @At("RETURN"))
+    private void initInject1(EntityType type, Level level, CallbackInfo ci) {
+        createPackTweaks$mergeDelay = 30;
+    }
+
+    @Inject(method = "<init>(Lnet/minecraft/world/entity/item/ItemEntity;)V", at = @At("RETURN"))
+    private void initInject2(ItemEntity entity, CallbackInfo ci) {
+        createPackTweaks$mergeDelay = 30;
+    }
 }
