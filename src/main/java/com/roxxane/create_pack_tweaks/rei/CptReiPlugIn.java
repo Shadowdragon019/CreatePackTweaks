@@ -1,5 +1,7 @@
 package com.roxxane.create_pack_tweaks.rei;
 
+import com.roxxane.create_pack_tweaks.rei.displays.DrillingDisplay;
+import com.roxxane.create_pack_tweaks.rei.displays.LavaSmeltingDisplay;
 import com.roxxane.create_pack_tweaks.rei.displays.MoldCoolingDisplay;
 import com.roxxane.create_pack_tweaks.rei.displays.MoldHeatingDisplay;
 import me.shedaniel.rei.api.common.display.DisplaySerializerRegistry;
@@ -17,6 +19,9 @@ public class CptReiPlugIn implements REIServerPlugin {
             BasicDisplay.Serializer.ofSimpleRecipeLess(MoldCoolingDisplay::new));
 
         registry.register(CptReiClientPlugin.drillingCategory,
-            BasicDisplay.Serializer.ofSimpleRecipeLess(MoldHeatingDisplay::new));
+            BasicDisplay.Serializer.ofSimpleRecipeLess(DrillingDisplay::new));
+
+        registry.register(CptReiClientPlugin.lavaSmeltingCategory,
+            BasicDisplay.Serializer.ofSimpleRecipeLess(LavaSmeltingDisplay::new));
     }
 }

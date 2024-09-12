@@ -40,11 +40,14 @@ public class Cpt {
         GogglesItem.addIsWearingPredicate((player) -> true);
 
         registrate.addRawLang("item.tooltip.create_pack_tweaks.goes_in_mold", "§8Can be placed in molds");
+        registrate.addRawLang("item.tooltip.create_pack_tweaks.fire_proof", "§8Lava proof");
+        registrate.addRawLang("item.tooltip.create_pack_tweaks.fuel", "§8Fuel");
         registrate.addRawLang("item.tooltip.create_pack_tweaks.mold",
             "§8Processing has a 5% chance to break the mold");
         registrate.addRawLang("category.create_pack_tweaks.mold_heating", "Mold Heating");
         registrate.addRawLang("category.create_pack_tweaks.mold_cooling", "Mold Cooling");
         registrate.addRawLang("category.create_pack_tweaks.drilling", "Drilling");
+        registrate.addRawLang("category.create_pack_tweaks.lava_smelting", "Lava Smelting");
         registrate.addRawLang("chat.create_pack_tweaks.reload_error", "§c" + displayName + " failed to reload!");
     }
 

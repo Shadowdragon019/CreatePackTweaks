@@ -45,7 +45,7 @@ public abstract class BlockBreakingKineticBlockEntityMixin extends KineticBlockE
                 return;
 
             Block blockToBreak = level.getBlockState(breakingPos).getBlock();
-            if (!CptConfig.loaded || CptConfig.drillingMap.get(blockToBreak) == null)
+            if (!CptConfig.isLoaded() || CptConfig.drillingMap.get(blockToBreak) == null)
                 createAutomatizedMod$oreDropTimer = 0;
             else {
                 createAutomatizedMod$oreDropTimer += (int) (1 * Math.abs(getSpeed()));

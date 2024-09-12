@@ -1,12 +1,15 @@
 {
   "block.create_pack_tweaks.mushy_mold": "pןoW ʎɥsnW",
   "category.create_pack_tweaks.drilling": "buıןןıɹᗡ",
+  "category.create_pack_tweaks.lava_smelting": "buıʇןǝɯS ɐʌɐꞀ",
   "category.create_pack_tweaks.mold_cooling": "buıןooƆ pןoW",
   "category.create_pack_tweaks.mold_heating": "buıʇɐǝH pןoW",
   "chat.create_pack_tweaks.reload_error": "¡pɐoןǝɹ oʇ pǝןıɐɟ sʞɐǝʍ⟘ ʞɔɐԀ ǝʇɐǝɹƆɔ§",
   "item.create_pack_tweaks.mushy_brick": "ʞɔıɹᗺ ʎɥsnW",
   "item.create_pack_tweaks.mushy_paste": "ǝʇsɐԀ ʎɥsnW",
   "item.create_pack_tweaks.small_pile_of_mushy_paste": "ǝʇsɐԀ ʎɥsnW ɟO ǝןıԀ ןןɐɯS",
+  "item.tooltip.create_pack_tweaks.fire_proof": "ɟooɹd ɐʌɐꞀ8§",
+  "item.tooltip.create_pack_tweaks.fuel": "ןǝnℲ8§",
   "item.tooltip.create_pack_tweaks.goes_in_mold": "spןoɯ uı pǝɔɐןd ǝq uɐƆ8§",
   "item.tooltip.create_pack_tweaks.mold": "pןoɯ ǝɥʇ ʞɐǝɹq oʇ ǝɔuɐɥɔ %ϛ ɐ sɐɥ buıssǝɔoɹԀ8§"
 }

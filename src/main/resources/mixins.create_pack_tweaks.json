@@ -5,6 +5,8 @@
   "mixins": [
     "AirCurrentMixin",
     "BlockBreakingKineticBlockEntityMixin",
+    "ItemEntityMixin",
+    "ItemMixin",
     "MushroomBlockMixin",
     "OakTreeGrowerMixin",
     "ReloadableServerResourcesMixin"

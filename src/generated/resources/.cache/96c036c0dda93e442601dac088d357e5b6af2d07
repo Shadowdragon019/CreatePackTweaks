@@ -1,7 +1,7 @@
-// 1.20.1	2024-09-05T12:46:11.497086757	Registrate Provider for create_pack_tweaks [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
+// 1.20.1	2024-09-11T21:40:27.862916557	Registrate Provider for create_pack_tweaks [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
 022a5c4af5a0404f6414997ab57362888901c366 assets/create_pack_tweaks/blockstates/mushy_mold.json
-11113604559ca6cbf815540bf3fc7e55c392dd8a assets/create_pack_tweaks/lang/en_ud.json
-1dd6ba3144a3ee95002674e886bd08337355a6eb assets/create_pack_tweaks/lang/en_us.json
+e79d472cc7bba03b0c810ed06bc1afa732ccea87 assets/create_pack_tweaks/lang/en_ud.json
+f38d5bff4bf35d1970e98413237ba4be46b78138 assets/create_pack_tweaks/lang/en_us.json
 07134fe547b7b1a4a9a42141d67096dc2153715c assets/create_pack_tweaks/models/item/mushy_brick.json
 885f00cad8f5d5cca810bf90d699bc8b9e5f3ab9 assets/create_pack_tweaks/models/item/mushy_mold.json
 c3a7bc27cc998ae590472ec42899cc8f675b712a assets/create_pack_tweaks/models/item/mushy_paste.json
