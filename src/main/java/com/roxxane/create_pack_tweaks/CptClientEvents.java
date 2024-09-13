@@ -24,9 +24,6 @@ public class CptClientEvents {
         var stack = event.getItemStack();
         var tooltip = event.getToolTip();
 
-        if (stack.getItem().isFireResistant())
-            tooltip.add(Component.translatable("item.tooltip.create_pack_tweaks.fire_proof"));
-
         if (ForgeHooks.getBurnTime(stack, RecipeType.SMELTING) >= 1)
             tooltip.add(Component.translatable("item.tooltip.create_pack_tweaks.fuel"));
 
