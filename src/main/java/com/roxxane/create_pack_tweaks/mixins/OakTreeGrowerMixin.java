@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(OakTreeGrower.class)
-public abstract class OakTreeGrowerMixin {
+abstract class OakTreeGrowerMixin {
     @Inject(method = "getConfiguredFeature", at = @At("RETURN"), cancellable = true)
     private void getConfiguredFeatureInject(
         RandomSource random,

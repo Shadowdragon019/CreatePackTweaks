@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(BlockBreakingKineticBlockEntity.class)
-public abstract class BlockBreakingKineticBlockEntityMixin extends KineticBlockEntity {
+abstract class BlockBreakingKineticBlockEntityMixin extends KineticBlockEntity {
     @Unique
     int createAutomatizedMod$oreDropTimer = 0;
 

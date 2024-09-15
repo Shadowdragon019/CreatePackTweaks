@@ -11,7 +11,10 @@ import com.tterrag.registrate.Registrate;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -35,7 +38,13 @@ public class Cpt {
         CptBlockEntities.register();
         CptFeatures.register(modEventBus);
 
-        //MinecraftForge.EVENT_BUS.addListener(this::wrench);
+        MinecraftForge.EVENT_BUS.addListener((TickEvent.PlayerTickEvent e) -> {
+            var player = e.player;
+            var movementModifier = player.getAttribute(Attributes.MOVEMENT_SPEED);
+            assert movementModifier != null;
+            movementModifier.removeModifiers();
+            movementModifier.setBaseValue(0.25);
+        });
 
         GogglesItem.addIsWearingPredicate((player) -> true);
 

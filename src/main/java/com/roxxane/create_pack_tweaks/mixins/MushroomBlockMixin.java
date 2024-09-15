@@ -19,7 +19,7 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(MushroomBlock.class)
-public abstract class MushroomBlockMixin extends BushBlock implements BonemealableBlock {
+abstract class MushroomBlockMixin extends BushBlock implements BonemealableBlock {
     public MushroomBlockMixin(Properties pProperties) {
         super(pProperties);
     }

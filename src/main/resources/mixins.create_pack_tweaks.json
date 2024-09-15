@@ -5,15 +5,23 @@
   "mixins": [
     "AirCurrentMixin",
     "BlockBreakingKineticBlockEntityMixin",
+    "EntityMixin",
     "ItemEntityMixin",
     "ItemMixin",
+    "LivingEntityMixin",
     "MushroomBlockMixin",
     "OakTreeGrowerMixin",
+    "PlayerMixin",
     "ReloadableServerResourcesMixin",
     "WrenchItemMixin"
   ],
   "injectors": {
     "defaultRequire": 1
   },
-  "refmap": "mixins.create_pack_tweaks.refmap.json"
+  "refmap": "mixins.create_pack_tweaks.refmap.json",
+  "client": [
+    "AbstractSelectionListMixin",
+    "CameraMixin",
+    "LocalPlayerMixin"
+  ]
 }

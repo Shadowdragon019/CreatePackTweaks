@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(AirCurrent.class)
-public abstract class AirCurrentMixin {
+abstract class AirCurrentMixin {
     @Shadow(remap = false) public AABB bounds;
 
     @Shadow(remap = false) public Direction direction;
