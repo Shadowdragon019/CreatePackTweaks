@@ -2,6 +2,8 @@ package com.roxxane.create_pack_tweaks.worldgen.features.classes;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.features.VegetationFeatures;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -78,6 +80,11 @@ public class TinyTreeFeature extends TinyFeature {
 
             for (var leavesPos : leavesPoses)
                 tinySetBlock(level, pos.offset(leavesPos.above()), leaves);
+
+            //noinspection DataFlowIssue
+            level.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE)
+                .get(VegetationFeatures.PATCH_GRASS)
+                .place(level, context.chunkGenerator(), context.random(), pos);
 
             return true;
         }

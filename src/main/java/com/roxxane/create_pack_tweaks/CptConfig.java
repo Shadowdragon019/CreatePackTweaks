@@ -25,6 +25,7 @@ public class CptConfig {
     public static Vec3 lavaSmeltingInitialVelocity;
     public static int lavaSmeltingConversionChance;
     public static Rectangle lavaSmeltingLavaBucket;
+    public static Rectangle smushingSmushingTexture;
     public static int itemInitialMergeDelay;
 
     private static final Path path = Path.of(FMLPaths.CONFIGDIR.get().toString() + "/" + Cpt.id + ".json");
@@ -92,6 +93,9 @@ public class CptConfig {
                 defaultData.add("lava_smelting_bucket_config",
                     makeJsonRectangle(31, 14, 16,16));
 
+                defaultData.add("smushing_smushing_config",
+                    makeJsonRectangle(7, -13, 10,25));
+
                 defaultData.addProperty("item_initial_merge_delay", 30);
 
 
@@ -122,6 +126,8 @@ public class CptConfig {
             lavaSmeltingConversionChance = data.get("lava_smelting_conversion_chance").getAsInt();
 
             lavaSmeltingLavaBucket = getRectangle(data.getAsJsonObject("lava_smelting_bucket_config"));
+
+            smushingSmushingTexture = getRectangle(data.getAsJsonObject("smushing_smushing_config"));
 
             itemInitialMergeDelay = data.get("item_initial_merge_delay").getAsInt();
 

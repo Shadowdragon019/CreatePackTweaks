@@ -19,4 +19,11 @@ abstract class PlayerMixin {
         else
             cpt$self().setMaxUpStep(0.5f);
     }
+
+    /*
+    @Redirect(method = "causeFallDamage", at = @At(value = "FIELD", target = "Lnet/minecraft/world/entity/player/Abilities;mayfly:Z"))
+    private boolean causeFallDamageRedirect(Abilities instance) {
+
+    }
+    */
 }

@@ -12,10 +12,9 @@ public class DataGenerators {
         var generator = event.getGenerator();
         var output = generator.getPackOutput();
         var lookupProvider = event.getLookupProvider();
+        @SuppressWarnings("unused")
+        var existingFileHelper = event.getExistingFileHelper();
 
-        generator.addProvider(
-            event.includeServer(),
-            new CptWorldGenProvider(output, lookupProvider)
-        );
+        generator.addProvider(event.includeServer(), new CptWorldGenProvider(output, lookupProvider));
     }
 }

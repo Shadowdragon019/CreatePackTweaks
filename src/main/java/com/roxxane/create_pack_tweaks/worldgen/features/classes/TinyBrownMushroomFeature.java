@@ -61,6 +61,10 @@ public class TinyBrownMushroomFeature extends TinyFeature {
                 .get(VegetationFeatures.PATCH_BROWN_MUSHROOM)
                 .place(level, context.chunkGenerator(), context.random(), pos);
 
+            level.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE)
+                .get(VegetationFeatures.PATCH_RED_MUSHROOM)
+                .place(level, context.chunkGenerator(), context.random(), pos);
+
             return true;
         }
         return false;

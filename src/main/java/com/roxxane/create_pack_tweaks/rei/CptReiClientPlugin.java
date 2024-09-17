@@ -4,22 +4,21 @@ import com.roxxane.create_pack_tweaks.Cpt;
 import com.roxxane.create_pack_tweaks.CptConfig;
 import com.roxxane.create_pack_tweaks.blocks.CptBlocks;
 import com.roxxane.create_pack_tweaks.blocks.FillableMoldBlock;
-import com.roxxane.create_pack_tweaks.rei.categories.DrillingCategory;
-import com.roxxane.create_pack_tweaks.rei.categories.LavaSmeltingCategory;
-import com.roxxane.create_pack_tweaks.rei.categories.MoldCoolingCategory;
-import com.roxxane.create_pack_tweaks.rei.categories.MoldHeatingCategory;
-import com.roxxane.create_pack_tweaks.rei.displays.DrillingDisplay;
-import com.roxxane.create_pack_tweaks.rei.displays.LavaSmeltingDisplay;
-import com.roxxane.create_pack_tweaks.rei.displays.MoldCoolingDisplay;
-import com.roxxane.create_pack_tweaks.rei.displays.MoldHeatingDisplay;
+import com.roxxane.create_pack_tweaks.items.CptItems;
+import com.roxxane.create_pack_tweaks.rei.categories.*;
+import com.roxxane.create_pack_tweaks.rei.displays.*;
 import com.simibubi.create.AllBlocks;
 import me.shedaniel.rei.api.client.plugins.REIClientPlugin;
 import me.shedaniel.rei.api.client.registry.category.CategoryRegistry;
 import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
+import me.shedaniel.rei.api.common.util.EntryIngredients;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import me.shedaniel.rei.forge.REIPluginClient;
 import net.minecraft.world.item.Items;
+import net.minecraftforge.common.Tags;
+
+import java.util.List;
 
 @REIPluginClient
 public class CptReiClientPlugin implements REIClientPlugin {
@@ -31,6 +30,8 @@ public class CptReiClientPlugin implements REIClientPlugin {
         CategoryIdentifier.of(Cpt.id, "drilling");
     public static final CategoryIdentifier<LavaSmeltingDisplay> lavaSmeltingCategory =
         CategoryIdentifier.of(Cpt.id, "lava_smelting");
+    public static final CategoryIdentifier<SmushingDisplay> smushingCategory =
+        CategoryIdentifier.of(Cpt.id, "smushing");
 
     @Override
     public void registerCategories(CategoryRegistry registry) {
@@ -47,6 +48,8 @@ public class CptReiClientPlugin implements REIClientPlugin {
 
         registry.add(new LavaSmeltingCategory());
         registry.addWorkstations(lavaSmeltingCategory, EntryStacks.of(Items.LAVA_BUCKET));
+
+        registry.add(new SmushingCategory());
     }
 
     @Override
@@ -94,5 +97,10 @@ public class CptReiClientPlugin implements REIClientPlugin {
                 ));
             }
         }
+
+        registry.add(new SmushingDisplay(
+            List.of(EntryIngredients.ofItemTag(Tags.Items.MUSHROOMS)),
+            List.of(EntryIngredients.of(CptItems.mushyPaste))
+        ));
     }
 }

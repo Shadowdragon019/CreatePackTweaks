@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import com.roxxane.create_pack_tweaks.blocks.CptBlocks;
 import com.roxxane.create_pack_tweaks.blocks.entities.CptBlockEntities;
 import com.roxxane.create_pack_tweaks.items.CptItems;
+import com.roxxane.create_pack_tweaks.mixin_inferfaces.MergeDelay;
 import com.roxxane.create_pack_tweaks.worldgen.features.CptFeatures;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.content.equipment.goggles.GogglesItem;
@@ -11,17 +12,22 @@ import com.tterrag.registrate.Registrate;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingFallEvent;
+import net.minecraftforge.event.entity.player.PlayerFlyableFallEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 
-// TODO: Category for mold fan interaction
 @SuppressWarnings("unused")
 @Mod(Cpt.id)
 public class Cpt {
@@ -38,15 +44,19 @@ public class Cpt {
         CptBlockEntities.register();
         CptFeatures.register(modEventBus);
 
-        MinecraftForge.EVENT_BUS.addListener((TickEvent.PlayerTickEvent e) -> {
-            var player = e.player;
+        MinecraftForge.EVENT_BUS.addListener((TickEvent.PlayerTickEvent event) -> {
+            var player = event.player;
             var movementModifier = player.getAttribute(Attributes.MOVEMENT_SPEED);
+
             assert movementModifier != null;
             movementModifier.removeModifiers();
             movementModifier.setBaseValue(0.25);
         });
 
         GogglesItem.addIsWearingPredicate((player) -> true);
+
+        MinecraftForge.EVENT_BUS.addListener((LivingFallEvent event) -> smush(event.getEntity()));
+        MinecraftForge.EVENT_BUS.addListener((PlayerFlyableFallEvent event) -> smush(event.getEntity()));
 
         registrate.addRawLang("item.tooltip.create_pack_tweaks.goes_in_mold", "§8Can be placed in molds");
         registrate.addRawLang("item.tooltip.create_pack_tweaks.fire_proof", "§8Lava proof");
@@ -58,6 +68,7 @@ public class Cpt {
         registrate.addRawLang("category.create_pack_tweaks.mold_cooling", "Mold Cooling");
         registrate.addRawLang("category.create_pack_tweaks.drilling", "Drilling");
         registrate.addRawLang("category.create_pack_tweaks.lava_smelting", "Lava Smelting");
+        registrate.addRawLang("category.create_pack_tweaks.smushing", "Smushing");
         registrate.addRawLang("chat.create_pack_tweaks.reload_error", "§c" + displayName + " failed to reload!");
     }
 
@@ -72,6 +83,27 @@ public class Cpt {
             if (AllItems.WRENCH.get().useOn(new UseOnContext(level, player, hand, item, hitResult))
                 == InteractionResult.SUCCESS)
                 player.swing(hand);
+    }
+
+    public void smush(LivingEntity entity) {
+        var level = entity.level();
+        var pos = entity.position();
+        var entities = level.getEntities(entity, AABB.ofSize(pos, 1, 1, 1));
+
+        for (var foundEntity : entities) {
+            if (foundEntity instanceof ItemEntity itemEntity) {
+                var stack = itemEntity.getItem();
+                if (stack.is(Tags.Items.MUSHROOMS)) {
+                    stack.shrink(1);
+
+                    Utils.attemptCastThen(itemEntity, (MergeDelay eee) -> eee.cpt$setMergeDelay(400));
+
+                    level.addFreshEntity(
+                        new ItemEntity(level, itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(),
+                            CptItems.mushyPaste.asStack()));
+                }
+            }
+        }
     }
 
     public static ResourceLocation makeResLoc(String path) {
