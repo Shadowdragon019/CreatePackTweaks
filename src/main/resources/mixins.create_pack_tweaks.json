@@ -22,6 +22,7 @@
   "client": [
     "AbstractSelectionListMixin",
     "CameraMixin",
+    "LiquidBlockRendererMixin",
     "LocalPlayerMixin"
   ]
 }
