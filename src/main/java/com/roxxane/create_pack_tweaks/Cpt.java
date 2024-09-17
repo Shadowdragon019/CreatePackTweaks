@@ -96,7 +96,8 @@ public class Cpt {
                 if (stack.is(Tags.Items.MUSHROOMS)) {
                     stack.shrink(1);
 
-                    Utils.attemptCastThen(itemEntity, (MergeDelay eee) -> eee.cpt$setMergeDelay(400));
+                    itemEntity.setPickUpDelay(60);
+                    ((MergeDelay) itemEntity).cpt$setMergeDelay(60);
 
                     level.addFreshEntity(
                         new ItemEntity(level, itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(),

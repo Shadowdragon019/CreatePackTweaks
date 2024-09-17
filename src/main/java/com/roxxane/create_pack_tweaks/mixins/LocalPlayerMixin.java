@@ -7,9 +7,8 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(LocalPlayer.class)
 abstract class LocalPlayerMixin {
-    // Modifies crouching movement multiplier
     @ModifyVariable(method = "aiStep", at = @At("STORE"))
-    private float clampModifyVariable(float original) {
+    private float aiStepModifyVariable_modifyCrouchMovementMultiplier(float original) {
         return 0.333333f;
     }
 }

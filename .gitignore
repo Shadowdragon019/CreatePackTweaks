@@ -28,3 +28,4 @@ forge*changelog.txt
 run/logs
 run-data/logs
 run/.mixin.out
+run-data/.mixin.out

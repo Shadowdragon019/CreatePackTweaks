@@ -49,4 +49,12 @@ abstract class LivingEntityMixin extends Entity implements Attackable, IForgeLiv
         else
             return onGround();
     }
+
+    @ModifyConstant(method = "aiStep", constant = @Constant(intValue = 10))
+    private int aiStepModifyConstant_removeJumpDelay(int original) {
+        if (cpt$isPlayer())
+            return 0;
+        else
+            return original;
+    }
 }
