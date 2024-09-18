@@ -132,6 +132,7 @@ repositories {
     }
     maven { url "https://maven.shedaniel.me" }
     maven { url "https://maven.architectury.dev/" }
+    maven { url "https://maven.blamejared.com" }
 }
 
 dependencies {
@@ -151,6 +152,8 @@ dependencies {
     implementation fg.deobf("me.shedaniel.cloth:cloth-config-forge:${cloth_config_version}")
     implementation fg.deobf("dev.architectury:architectury-forge:${architectury_version}")
     runtimeOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-forge:${rei_version}")
+
+    implementation fg.deobf("org.embeddedt:embeddium-1.20.1:0.2.11-git.23aedfb+mc1.20.1")
 
     implementation fg.deobf("maven.modrinth:1PfY6b5p:XwQE7XRH") //Make JEI plugins work for REI mods
 
