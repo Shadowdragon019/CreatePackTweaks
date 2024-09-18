@@ -13,7 +13,8 @@
     "OakTreeGrowerMixin",
     "PlayerMixin",
     "ReloadableServerResourcesMixin",
-    "WrenchItemMixin"
+    "WrenchItemMixin",
+    "embeddium.FluidRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
