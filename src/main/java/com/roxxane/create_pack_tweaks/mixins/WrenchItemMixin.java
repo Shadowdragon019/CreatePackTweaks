@@ -10,13 +10,8 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(WrenchItem.class)
 abstract class WrenchItemMixin {
-    @Redirect(
-        method = "useOn",
-        at = @At(
-            value = "INVOKE",
-            target = "Lcom/simibubi/create/content/equipment/wrench/WrenchItem;canWrenchPickup(Lnet/minecraft/world/level/block/state/BlockState;)Z"
-        )
-    )
+    @Redirect(method = "useOn", at = @At(value = "INVOKE", remap = false,
+        target = "Lcom/simibubi/create/content/equipment/wrench/WrenchItem;canWrenchPickup(Lnet/minecraft/world/level/block/state/BlockState;)Z"))
     private boolean useOnInject(WrenchItem instance, BlockState state, @Local(argsOnly = true) UseOnContext context) {
         return state.getDestroySpeed(context.getLevel(), context.getClickedPos()) > -1;
     }

@@ -60,13 +60,8 @@ public abstract class ItemEntityMixin extends Entity implements TraceableEntity,
         ));
     }
 
-    @Inject(
-        method = "tick",
-        at = @At(
-            value = "INVOKE",
-            target = "Lnet/minecraft/world/entity/item/ItemEntity;getMaxHeightFluidType()Lnet/minecraftforge/fluids/FluidType;"
-        )
-    )
+    @Inject(method = "tick", at = @At(value = "INVOKE", remap = false,
+        target = "Lnet/minecraft/world/entity/item/ItemEntity;getMaxHeightFluidType()Lnet/minecraftforge/fluids/FluidType;"))
     private void tickInject(CallbackInfo ci) {
         var level = level();
         var item = getItem().getItem();
