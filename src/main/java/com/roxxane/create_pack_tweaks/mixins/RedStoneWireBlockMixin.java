@@ -15,16 +15,14 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 
-import static com.roxxane.create_pack_tweaks.CptConfig.redstoneColorMultiplier;
-
 @Mixin(RedStoneWireBlock.class)
 public class RedStoneWireBlockMixin {
     @Unique
     private static Vec3 cpt$modifyColor(int power, Vec3 color) {
-        if (power >= CptConfig.redstoneColorMultiplierFrom && power <= CptConfig.redstoneColorMultiplierTo)
-            return color.multiply(redstoneColorMultiplier, redstoneColorMultiplier, redstoneColorMultiplier);
-        else
-            return color;
+        for (var element : CptConfig.redstoneColorMultipliers)
+            if (power >= element.b() && power <= element.c())
+                color = color.multiply(element.a(), element.a(), element.a());
+        return color;
     }
 
     @WrapOperation(method = "getColorForPower", at = @At(value = "INVOKE",
