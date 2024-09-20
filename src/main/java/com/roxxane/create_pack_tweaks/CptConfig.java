@@ -7,7 +7,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import me.shedaniel.math.Rectangle;
-import net.minecraft.Util;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -22,6 +21,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.function.BiFunction;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class CptConfig {
@@ -116,6 +116,18 @@ public class CptConfig {
         return object;
     }
 
+    private static JsonObject makeJsonObject(Consumer<JsonObject> function) {
+        var object = new JsonObject();
+        function.accept(object);
+        return object;
+    }
+
+    private static JsonArray makeJsonArray(Consumer<JsonArray> function) {
+        var array = new JsonArray();
+        function.accept(array);
+        return array;
+    }
+
     @SuppressWarnings("CallToPrintStackTrace")
     public static boolean reload() {
         var reloadSuccess = false;
@@ -127,11 +139,11 @@ public class CptConfig {
 
                 defaultData.addProperty("lava_smelting_conversion_chance", 10);
 
-                var lavaSmeltingVelocityObject = new JsonObject();
-                lavaSmeltingVelocityObject.addProperty("x", 0.15);
-                lavaSmeltingVelocityObject.addProperty("y", 0.4);
-                lavaSmeltingVelocityObject.addProperty("z", 0.15);
-                defaultData.add("lava_smelting_initial_velocity", lavaSmeltingVelocityObject);
+                defaultData.add("lava_smelting_initial_velocity", makeJsonObject(object -> {
+                    object.addProperty("x", 0.15);
+                    object.addProperty("y", 0.4);
+                    object.addProperty("z", 0.15);
+                }));
 
                 var lavaSmeltingObject = new JsonObject();
                 lavaSmeltingObject.addProperty(
@@ -139,9 +151,14 @@ public class CptConfig {
                 lavaSmeltingObject.addProperty("bedrock", "air");
                 defaultData.add("lava_smelting", lavaSmeltingObject);
 
-                var drillingConfig = new JsonObject();
-                drillingConfig.addProperty("bedrock", "dirt");
-                defaultData.add("drilling_config", drillingConfig);
+                defaultData.add("lava_smelting", makeJsonObject(object -> {
+                    object.addProperty(
+                        "create_pack_tweaks:mushy_paste", "create_pack_tweaks:mushy_brick");
+                    object.addProperty("bedrock", "air");
+                }));
+
+                defaultData.add("drilling_config", makeJsonObject(object ->
+                    object.addProperty("bedrock", "dirt")));
 
                 defaultData.add("lava_smelting_bucket_config",
                     makeJsonRectangle(31, 14, 16,16));
@@ -151,13 +168,13 @@ public class CptConfig {
 
                 defaultData.addProperty("item_initial_merge_delay", 30);
 
-                defaultData.add("redstone_color_multipliers", Util.make(new JsonArray(),
-                    array -> array.add(Util.make(new JsonObject(), object ->
-                {
-                    object.addProperty("multiplier", 0.8);
-                    object.addProperty("min", 1);
-                    object.addProperty("max", 15);
-                }))));
+                defaultData.add("redstone_color_multipliers", makeJsonArray(array ->
+                    array.add(makeJsonObject(object -> {
+                        object.addProperty("multiplier", 0.8);
+                        object.addProperty("min", 1);
+                        object.addProperty("max", 15);
+                    }))
+                ));
 
                 // Closing
                 gson.toJson(defaultData, writer);
