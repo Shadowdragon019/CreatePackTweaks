@@ -10,10 +10,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.common.extensions.IForgeLivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Constant;
-import org.spongepowered.asm.mixin.injection.ModifyConstant;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.*;
 
 @Mixin(LivingEntity.class)
 abstract class LivingEntityMixin extends Entity implements Attackable, IForgeLivingEntity {
@@ -56,5 +53,10 @@ abstract class LivingEntityMixin extends Entity implements Attackable, IForgeLiv
             return 0;
         else
             return original;
+    }
+
+    @ModifyVariable(method = "setSprinting", at = @At("HEAD"), argsOnly = true)
+    private boolean setSprintingModifyVariable(boolean original) {
+        return false;
     }
 }

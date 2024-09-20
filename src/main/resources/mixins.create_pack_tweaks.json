@@ -12,6 +12,7 @@
     "MushroomBlockMixin",
     "OakTreeGrowerMixin",
     "PlayerMixin",
+    "RedStoneWireBlockMixin",
     "ReloadableServerResourcesMixin",
     "WrenchItemMixin",
     "embeddium.FluidRendererMixin"

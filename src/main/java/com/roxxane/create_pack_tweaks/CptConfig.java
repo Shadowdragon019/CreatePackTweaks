@@ -27,6 +27,9 @@ public class CptConfig {
     public static Rectangle lavaSmeltingLavaBucket;
     public static Rectangle smushingSmushingTexture;
     public static int itemInitialMergeDelay;
+    public static double redstoneColorMultiplier;
+    public static int redstoneColorMultiplierFrom;
+    public static int redstoneColorMultiplierTo;
 
     private static final Path path = Path.of(FMLPaths.CONFIGDIR.get().toString() + "/" + Cpt.id + ".json");
 
@@ -98,6 +101,9 @@ public class CptConfig {
 
                 defaultData.addProperty("item_initial_merge_delay", 30);
 
+                defaultData.addProperty("redstone_color_multiplier", 1);
+                defaultData.addProperty("redstone_color_multiplier_from", 0);
+                defaultData.addProperty("redstone_color_multiplier_to", 15);
 
                 // Closing
                 gson.toJson(defaultData, writer);
@@ -130,6 +136,10 @@ public class CptConfig {
             smushingSmushingTexture = getRectangle(data.getAsJsonObject("smushing_smushing_config"));
 
             itemInitialMergeDelay = data.get("item_initial_merge_delay").getAsInt();
+
+            redstoneColorMultiplier = data.get("redstone_color_multiplier").getAsDouble();
+            redstoneColorMultiplierFrom = data.get("redstone_color_multiplier_from").getAsInt();
+            redstoneColorMultiplierTo = data.get("redstone_color_multiplier_to").getAsInt();
 
             reloadSuccess = true;
         } catch (Exception ignored) {

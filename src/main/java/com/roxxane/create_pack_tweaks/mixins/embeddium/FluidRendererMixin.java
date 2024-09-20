@@ -29,8 +29,7 @@ public class FluidRendererMixin {
             to = @At(value = "INVOKE",
                 target = "Lnet/minecraft/core/Direction;getAxis()Lnet/minecraft/core/Direction$Axis;")))
     private void renderWrapOperation(ModelQuadViewMutable quad, int i, float x, float y, float z, float u, float v,
-        Operation<Void> original, @Local TextureAtlasSprite sprite)
-    {
+        Operation<Void> original, @Local TextureAtlasSprite sprite) {
         var minU = sprite.getU(0);
         var maxU = sprite.getU(16);
         var minV = sprite.getV(0);

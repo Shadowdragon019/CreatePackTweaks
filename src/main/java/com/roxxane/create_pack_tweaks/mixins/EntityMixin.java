@@ -7,6 +7,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -16,7 +17,7 @@ import java.util.function.Predicate;
 abstract class EntityMixin {
     @Unique
     private boolean cpt$isPlayer() {
-        return (Entity) (Object) this instanceof Player;
+        return ((Entity) (Object) this) instanceof Player;
     }
 
     // Disable swimming
@@ -26,7 +27,7 @@ abstract class EntityMixin {
             cir.setReturnValue(false);
     }
 
-    // Nuke the hell out of liquid physics
+    // Nuke the hell outta liquid physics
     @Inject(method = "updateFluidHeightAndDoFluidPushing(Ljava/util/function/Predicate;)V",
         at = @At("HEAD"), cancellable = true, remap = false)
     private void updateFluidHeightAndDoFluidPushingInject(Predicate<FluidState> shouldUpdate, CallbackInfo ci) {
@@ -38,5 +39,10 @@ abstract class EntityMixin {
     private void isSprintingInject(CallbackInfoReturnable<Boolean> cir) {
         if (cpt$isPlayer())
             cir.setReturnValue(false);
+    }
+
+    @ModifyVariable(method = "setSprinting", at = @At("HEAD"), argsOnly = true)
+    private boolean setSprintingModifyVariable(boolean original) {
+        return false;
     }
 }
