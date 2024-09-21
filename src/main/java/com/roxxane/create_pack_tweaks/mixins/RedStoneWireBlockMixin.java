@@ -10,10 +10,13 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.RedStoneWireBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(RedStoneWireBlock.class)
 public class RedStoneWireBlockMixin {
@@ -34,6 +37,14 @@ public class RedStoneWireBlockMixin {
         return Mth.color((float) color.x, (float) color.y, (float) color.z);
     }
 
+    @Inject(method = "animateTick", at = @At("HEAD"), cancellable = true)
+    private void animateTickInject(BlockState pState, Level level, BlockPos pos, RandomSource random,
+                                   CallbackInfo ci
+    ) {
+        ci.cancel();
+    }
+
+    // This isn't needed, but just in case
     @WrapOperation(method = "animateTick", at = @At(value = "INVOKE",
         target = "Lnet/minecraft/world/level/block/RedStoneWireBlock;spawnParticlesAlongLine(Lnet/minecraft/world/level/Level;Lnet/minecraft/util/RandomSource;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/core/Direction;Lnet/minecraft/core/Direction;FF)V"))
     private void animateTickWrapOperation(RedStoneWireBlock instance, Level level, RandomSource random, BlockPos pos,
