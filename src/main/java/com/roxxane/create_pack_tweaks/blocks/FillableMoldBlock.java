@@ -39,10 +39,10 @@ import java.util.Map;
 
 @SuppressWarnings("deprecation")
 public class FillableMoldBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
-    public static final VoxelShape east = box(0, 0, 2, 16, 5, 14);
-    public static final VoxelShape west = box(0, 0, 2, 16, 5, 14);
-    public static final VoxelShape south = box(2, 0, 0, 14, 5, 16);
-    public static final VoxelShape north = box(2, 0, 0, 14, 5, 16);
+    public static final VoxelShape east = box(0, 0, 2, 16, 4, 14);
+    public static final VoxelShape west = box(0, 0, 2, 16, 4, 14);
+    public static final VoxelShape south = box(2, 0, 0, 14, 4, 16);
+    public static final VoxelShape north = box(2, 0, 0, 14, 4, 16);
 
     public static final Map<MaterialState, NonNullSupplier<Item>> materialItemMap = Map.of(
         MaterialState.mushyPaste, CptItems.smallPileOfMushyPaste,
