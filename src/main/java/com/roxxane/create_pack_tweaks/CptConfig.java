@@ -7,8 +7,12 @@ import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import me.shedaniel.math.Rectangle;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.fml.loading.FMLPaths;
@@ -19,11 +23,13 @@ import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+@SuppressWarnings("unused")
 public class CptConfig {
     public record Tuple<A, B, C>(A a, B b, C c) {}
 
@@ -36,6 +42,7 @@ public class CptConfig {
     public static Rectangle smushingSmushingTexture;
     public static int itemInitialMergeDelay;
     public static ArrayList<Tuple<Float, Integer, Integer>> redstoneColorMultipliers;
+    public static HashMap<Ingredient, ArrayList<MutableComponent>> tooltips;
 
     private static final Path path = Path.of(FMLPaths.CONFIGDIR.get().toString() + "/" + Cpt.id + ".json");
 
@@ -47,17 +54,32 @@ public class CptConfig {
         return ForgeRegistries.ITEMS.getValue(new ResourceLocation(string));
     }
 
-    private static Item getItem(JsonElement jsonElement) {
-        return getItem(jsonElement.getAsString());
-    }
-
     private static Block getBlock(String string) {
         return ForgeRegistries.BLOCKS.getValue(new ResourceLocation(string));
     }
 
-    @SuppressWarnings("unused")
-    private static Block getBlock(JsonElement jsonElement) {
-        return getBlock(jsonElement.getAsString());
+    @SuppressWarnings("DataFlowIssue")
+    private static TagKey<Item> getItemTag(String string) {
+        return ForgeRegistries.ITEMS.tags().
+            getTag(TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(), new ResourceLocation(string))).getKey();
+    }
+
+    private static Item[] getItems(JsonArray array) {
+        var items = new Item[array.size()];
+        Arrays.setAll(items, index -> getItem(array.get(index).getAsString()));
+
+        return items;
+    }
+
+    private static Ingredient getIngredient(Object object) {
+        if (object instanceof JsonArray array)
+            return Ingredient.of(getItems(array));
+        else if (object instanceof JsonElement element)
+            if (element.getAsString().startsWith("#"))
+                return Ingredient.of(getItemTag(element.getAsString().substring(1)));
+            else
+                return Ingredient.of(getItem(element.getAsString()));
+        else throw new IllegalArgumentException("Could not parse ingredient, " + object);
     }
 
     private static Rectangle getRectangle(JsonObject object) {
@@ -78,26 +100,32 @@ public class CptConfig {
         return array;
     }
 
-    @SuppressWarnings("unused")
     private static <Key, Value> HashMap<Key, Value> getHashMap(JsonObject jsonObject,
-                                                               BiFunction<String, JsonElement, Key> keyFunction, BiFunction<String, JsonElement, Value> valueFunction)
+       BiFunction<String, JsonElement, Key> keyFunction, BiFunction<String, JsonElement, Value> valueFunction)
     {
-        var object = new HashMap<Key, Value>();
+        var map = new HashMap<Key, Value>();
         for (var entry : jsonObject.entrySet())
-            object.put(keyFunction.apply(entry.getKey(), entry.getValue()),
+            map.put(keyFunction.apply(entry.getKey(), entry.getValue()),
                 valueFunction.apply(entry.getKey(), entry.getValue()));
-
-        return object;
+        return map;
     }
 
     private static <Key, Value> HashMap<Key, Value> getHashMap(JsonObject jsonObject,
         Function<String, Key> keyFunction, Function<JsonElement, Value> valueFunction)
     {
-        var object = new HashMap<Key, Value>();
+        var map = new HashMap<Key, Value>();
         for (var entry : jsonObject.entrySet())
-            object.put(keyFunction.apply(entry.getKey()), valueFunction.apply(entry.getValue()));
+            map.put(keyFunction.apply(entry.getKey()), valueFunction.apply(entry.getValue()));
+        return map;
+    }
 
-        return object;
+    private static <Key, Value> HashMap<Key, Value> getHashMap(JsonArray jsonArray,
+        Function<JsonElement, Key> keyFunction, Function<JsonElement, Value> valueFunction)
+    {
+        var map = new HashMap<Key, Value>();
+        for (var element : jsonArray)
+            map.put(keyFunction.apply(element), valueFunction.apply(element));
+        return map;
     }
 
     private static <A, B, C> Tuple<A, B, C> getTuple(JsonObject object, Function<JsonObject, A> aFunction,
@@ -122,9 +150,61 @@ public class CptConfig {
         return object;
     }
 
+    private static JsonObject makeJsonObject(Object... objects) {
+        if (objects.length % 2 != 0)
+            throw new IllegalArgumentException("Cannot map all keys to values");
+
+        var index = -1;
+        final var jsonObject = new JsonObject();
+        String key = null;
+
+        for (var object : objects) {
+            index++;
+            if (index % 2 == 0)
+                key = (String) object;
+            else {
+                if (object instanceof JsonElement)
+                    jsonObject.add(key, (JsonElement) object);
+                else {
+                    if (object instanceof String)
+                        jsonObject.addProperty(key, (String) object);
+                    else if (object instanceof Number)
+                        jsonObject.addProperty(key, (Number) object);
+                    else if (object instanceof Boolean)
+                        jsonObject.addProperty(key, (Boolean) object);
+                    else if (object instanceof Character)
+                        jsonObject.addProperty(key, (Character) object);
+                    else
+                        throw new IllegalStateException("Could not add property to JsonObject");
+                }
+                key = null;
+            }
+        }
+        return jsonObject;
+    }
+
     private static JsonArray makeJsonArray(Consumer<JsonArray> function) {
         var array = new JsonArray();
         function.accept(array);
+        return array;
+    }
+
+    private static JsonArray makeJsonArray(Object... objects) {
+        var array = new JsonArray();
+
+        for (var object : objects)
+            if (object instanceof JsonElement)
+                array.add((JsonElement) object);
+            else if (object instanceof String)
+                array.add((String) object);
+            else if (object instanceof Number)
+                array.add((Number) object);
+            else if (object instanceof Boolean)
+                array.add((Boolean) object);
+            else if (object instanceof Character)
+                array.add((Character) object);
+            else
+                throw new IllegalStateException("Could not add element to JsonArray");
         return array;
     }
 
@@ -139,26 +219,16 @@ public class CptConfig {
 
                 defaultData.addProperty("lava_smelting_conversion_chance", 10);
 
-                defaultData.add("lava_smelting_initial_velocity", makeJsonObject(object -> {
-                    object.addProperty("x", 0.15);
-                    object.addProperty("y", 0.4);
-                    object.addProperty("z", 0.15);
-                }));
+                defaultData.add("lava_smelting_initial_velocity", makeJsonObject(
+                    "x", 0.15, "y", 0.4, "z", 0.15
+                ));
 
-                var lavaSmeltingObject = new JsonObject();
-                lavaSmeltingObject.addProperty(
-                    "create_pack_tweaks:mushy_paste", "create_pack_tweaks:mushy_brick");
-                lavaSmeltingObject.addProperty("bedrock", "air");
-                defaultData.add("lava_smelting", lavaSmeltingObject);
+                defaultData.add("lava_smelting", makeJsonObject(
+                    "create_pack_tweaks:mushy_paste", "create_pack_tweaks:mushy_brick",
+                    "bedrock", "air"
+                ));
 
-                defaultData.add("lava_smelting", makeJsonObject(object -> {
-                    object.addProperty(
-                        "create_pack_tweaks:mushy_paste", "create_pack_tweaks:mushy_brick");
-                    object.addProperty("bedrock", "air");
-                }));
-
-                defaultData.add("drilling_config", makeJsonObject(object ->
-                    object.addProperty("bedrock", "dirt")));
+                defaultData.add("drilling_config", makeJsonObject("bedrock", "dirt"));
 
                 defaultData.add("lava_smelting_bucket_config",
                     makeJsonRectangle(31, 14, 16,16));
@@ -168,13 +238,22 @@ public class CptConfig {
 
                 defaultData.addProperty("item_initial_merge_delay", 30);
 
-                defaultData.add("redstone_color_multipliers", makeJsonArray(array ->
-                    array.add(makeJsonObject(object -> {
-                        object.addProperty("multiplier", 0.8);
-                        object.addProperty("min", 1);
-                        object.addProperty("max", 15);
-                    }))
-                ));
+                defaultData.add("redstone_color_multipliers", makeJsonArray(makeJsonObject(
+                    "multiplier", 0.8, "min", 1, "max", 15
+                )));
+
+                defaultData.add("tooltips", makeJsonArray(makeJsonObject(
+                    "items", makeJsonArray("dirt", "bedrock"),
+                    "tooltip", makeJsonArray("SPOOPY")
+                )));
+                /*
+                tooltip: [
+                    {
+                        items items
+                        tooltip [text]
+                    }
+                ]
+                 */
 
                 // Closing
                 gson.toJson(defaultData, writer);
@@ -185,10 +264,10 @@ public class CptConfig {
             JsonObject data = gson.fromJson(reader, JsonObject.class);
 
             drillingMap = getHashMap(data.getAsJsonObject("drilling_config"),
-                CptConfig::getBlock, CptConfig::getItem);
+                CptConfig::getBlock, value -> getItem(value.getAsString()));
 
             lavaSmelting = getHashMap(data.getAsJsonObject("lava_smelting"),
-                CptConfig::getItem, CptConfig::getItem);
+                CptConfig::getItem, key -> getItem(key.getAsString()));
             lavaSmeltingInitialVelocity = getVec3(data.getAsJsonObject("lava_smelting_initial_velocity"));
             lavaSmeltingConversionChance = data.get("lava_smelting_conversion_chance").getAsInt();
             lavaSmeltingLavaBucket = getRectangle(data.getAsJsonObject("lava_smelting_bucket_config"));
@@ -202,6 +281,13 @@ public class CptConfig {
                     object -> object.get("multiplier").getAsFloat(),
                     object -> object.get("min").getAsInt(),
                     object -> object.get("max").getAsInt()
+                ));
+
+
+            tooltips = getHashMap(data.getAsJsonArray("tooltips"),
+                object -> getIngredient(object.getAsJsonObject().get("items")),
+                object -> getArrayList(object.getAsJsonObject().get("tooltip").getAsJsonArray(),
+                    tooltip -> Component.translatable(tooltip.getAsString())
                 ));
 
             reloadSuccess = true;

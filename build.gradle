@@ -153,7 +153,7 @@ dependencies {
     implementation fg.deobf("dev.architectury:architectury-forge:${architectury_version}")
     runtimeOnly fg.deobf("me.shedaniel:RoughlyEnoughItems-forge:${rei_version}")
 
-    implementation fg.deobf("org.embeddedt:embeddium-1.20.1:0.2.11-git.23aedfb+mc1.20.1")
+    compileOnly fg.deobf("org.embeddedt:embeddium-1.20.1:0.2.11-git.23aedfb+mc1.20.1")
 
     implementation fg.deobf("maven.modrinth:1PfY6b5p:XwQE7XRH") //Make JEI plugins work for REI mods
 

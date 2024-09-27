@@ -35,5 +35,10 @@ public class CptClientEvents {
             for (var item : entry.getKey())
                 if (stack.is(item))
                     tooltip.add(Component.translatable("item.tooltip.create_pack_tweaks." + entry.getValue()));
+
+        if (CptConfig.isLoaded())
+            for (var entry : CptConfig.tooltips.entrySet())
+                if (entry.getKey().test(stack))
+                    tooltip.addAll(entry.getValue());
     }
 }
