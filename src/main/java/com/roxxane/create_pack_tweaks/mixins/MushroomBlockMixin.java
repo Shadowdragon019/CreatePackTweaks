@@ -12,11 +12,12 @@ import net.minecraft.world.level.block.BushBlock;
 import net.minecraft.world.level.block.MushroomBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(MushroomBlock.class)
 abstract class MushroomBlockMixin extends BushBlock implements BonemealableBlock {
@@ -26,11 +27,11 @@ abstract class MushroomBlockMixin extends BushBlock implements BonemealableBlock
 
     @Shadow @Final private ResourceKey<ConfiguredFeature<?, ?>> feature;
 
-    @Shadow public abstract boolean canSurvive(
-        @NotNull BlockState state,
-        @NotNull LevelReader level,
-        @NotNull BlockPos pos
-    );
+    @Shadow public abstract boolean canSurvive(@NotNull BlockState state, @NotNull LevelReader level,
+        @NotNull BlockPos pos);
+
+    @Mutable
+    @Shadow @Final protected static VoxelShape SHAPE;
 
     /**
      * @author Roxxane
@@ -38,10 +39,7 @@ abstract class MushroomBlockMixin extends BushBlock implements BonemealableBlock
      */
     @SuppressWarnings({"deprecation", "DataFlowIssue"})
     @Overwrite
-    public void randomTick(
-        @NotNull BlockState state,
-        ServerLevel level,
-        @NotNull BlockPos pos,
+    public void randomTick(@NotNull BlockState state, ServerLevel level, @NotNull BlockPos pos,
         @NotNull RandomSource random
     ) {
         if (level.isAreaLoaded(pos, 1) && random.nextInt(7) == 0) {
@@ -53,5 +51,10 @@ abstract class MushroomBlockMixin extends BushBlock implements BonemealableBlock
             )
                 level.setBlock(pos, state, 1 | 3);
         }
+    }
+
+    @Inject(method = "<clinit>", at = @At("RETURN"))
+    private static void changeMushroomShape(CallbackInfo ci) {
+        SHAPE = box(2, 0, 2, 14, 10, 14);
     }
 }
