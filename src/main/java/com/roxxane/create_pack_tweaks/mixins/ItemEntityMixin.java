@@ -27,13 +27,11 @@ public abstract class ItemEntityMixin extends Entity implements TraceableEntity,
     @Unique
     private int cpt$mergeDelay = 0;
 
-    @Unique
     @Override
     public void cpt$setMergeDelay(int value) {
         cpt$mergeDelay = value;
     }
 
-    @Unique
     @Override
     public int cpt$getMergeDelay() {
         return cpt$mergeDelay;
